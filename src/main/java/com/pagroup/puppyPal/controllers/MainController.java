@@ -13,16 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.pagroup.puppyPal.models.LoginUser;
 import com.pagroup.puppyPal.models.User;
-import com.pagroup.puppyPal.services.DogService;
 import com.pagroup.puppyPal.services.UserService;
 
 
+@Controller
 public class MainController {
 
 	@Autowired
 	private UserService users;
-	@Autowired
-	private DogService dogs;
+
     
     @GetMapping("/")
     public String index(Model model) {
@@ -49,7 +48,7 @@ public class MainController {
 
         session.setAttribute("userId", user.getId());
     
-        return "redirect:/dogs";
+        return "redirect:/dashboard";
     }
     
     @PostMapping("/login")
@@ -67,19 +66,15 @@ public class MainController {
 
         session.setAttribute("userId", user.getId());
     
-        return "redirect:/dogs";
+        return "redirect:/dashboard";
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+    	session.invalidate();
+    	return "redirect:/";
+    }
+
+
     
-    @GetMapping("/dogs")
-    public String book(Model model, HttpSession session) {
-    	
-    	if(session.getAttribute("userId") == null) {
-    		return "redirect:/";
-    	}
-    	
-    	model.addAttribute("dogs", dogs.all());
-    	model.addAttribute("user", users.findById((Long)session.getAttribute("userId")));
-    	return "dogs.jsp";
-    }
     
 }
