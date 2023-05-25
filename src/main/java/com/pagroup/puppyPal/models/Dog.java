@@ -1,7 +1,5 @@
 package com.pagroup.puppyPal.models;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +12,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
+
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,7 +27,7 @@ public class Dog {
     private Long id;
 	
 	@NotBlank(message="Dog Name is required")
-    private String dogName;
+    private String name;
 	
 	@NotBlank(message="Breed is required")
     private String breed;
@@ -76,11 +77,11 @@ public class Dog {
 		this.id = id;
 	}
     
-	public String getDogName() {
-        return dogName;
+	public String getName() {
+        return name;
     }
-    public void setDogName(String dogName) {
-        this.dogName = dogName;
+    public void setName(String name) {
+        this.name = name;
     }
     public String getBreed() {
         return breed;

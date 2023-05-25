@@ -14,9 +14,12 @@
 <body>
 
 	<div class="container">
-		<h1>Welcome, <c:out value="${user.userName}"/>!</h1>
+		<div class="d-flex justify-content-between align-items-center">
+    		<h1 class="text-primary">Welcome, <c:out value="${user.userName}"/></h1>
+    		<a href="/logout">Logout</a>
+  		</div>
 		
-				<a href="/logout">logout</a>
+		<h3 class="text-primary text-info"><c:out value="${user.userName}"/>'s Dogs</h3>
 		
 		<table class="table table-light bg-light" >
 		
@@ -29,11 +32,11 @@
 			<c:forEach var="dog" items="${dog}">
 				
 					<tr>
-						<td><a href="doggies/${dog.id}"><c:out value="${dog.dogName}"/></a></td>
+						<td><a href="doggies/${dog.id}"><c:out value="${dog.name}"/></a></td>
 						<td><c:out value="${dog.breed}"/></td>
-						<td><c:out value="${book.age}"/></td>
+						<td><c:out value="${dog.age}"/></td>
 					<c:if test="${user==dog.user}">
-						<td><a href="/trackings/${dog.id}">Trackings</a></td>
+						<td><a href="/trackings/${dog.id}">Tracking</a></td>
 				   </c:if>
 						
 					</tr>
@@ -41,7 +44,7 @@
 			</c:forEach>
 		
 		</table>
-		<a style="text-align:center" class="form-control" href="/newDog"> Add a Dog!</a>
+		<a href="/newDog" class="btn btn-primary">Add a Dog!</a>
 	</div>
 
 </body>

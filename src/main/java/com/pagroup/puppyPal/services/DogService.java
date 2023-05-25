@@ -30,8 +30,8 @@ public class DogService {
 		return repo.save(dog);
 	}
 	
-	public void delete(Dog dog) {
-		repo.delete(dog);
+	public void delete(Long id) {
+		repo.deleteById(id);
 	}
 	
 }
