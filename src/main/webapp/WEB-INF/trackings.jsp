@@ -27,7 +27,7 @@
 	 				<th>Date</th>
 	 				<th>Time</th>
 	 			</tr>
-	 			<c:forEach var="tracking" items="${tracking}">
+	 			<c:forEach var="tracking" items="${dog.tracking}">
 	 					<tr>
 	 						<td><c:out value="${tracking.event}"/></td>
 	 						<td><c:out value="${tracking.comments}"/></td>
