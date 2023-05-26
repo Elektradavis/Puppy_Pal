@@ -66,7 +66,14 @@ public class User {
 	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<Tracking> tracking;
 	
-
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+		name= "users_dogs",
+		joinColumns = @JoinColumn(name="user_id"),
+		inverseJoinColumns = @JoinColumn(name="dog_id")
+	)
+	private List<Dog> dogs;
+	
 	public User() {}
 	
 	public Long getId() {
@@ -141,6 +148,13 @@ public class User {
 		this.tracking = tracking;
 	}
 	
+	public List<Dog> getDogs() {
+		return dogs;
+	}
+	
+	public void setDogs(List<Dog> dogs) {
+		this.dogs = dogs;
+	}
 	
 	
 }
