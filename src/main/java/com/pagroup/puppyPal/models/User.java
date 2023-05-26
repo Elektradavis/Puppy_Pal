@@ -1,6 +1,8 @@
 package com.pagroup.puppyPal.models;
 
-import java.sql.Date;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,14 +14,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import antlr.collections.List;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 
 @Entity
@@ -125,7 +125,7 @@ public class User {
 		this.updatedAt = updatedAt;
 	}
 	public List<Dog> getDogs() {
-		return books;
+		return dogs;
 	}
 	public void setDogs(List<Dog> dogs) {
 		this.dogs = dogs;

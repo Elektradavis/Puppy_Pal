@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import com.pagroup.puppyPal.models.Dog;
 import com.pagroup.puppyPal.models.Tracking;
@@ -65,28 +64,30 @@ public class PalController {
 		return "trackings.jsp";
 	}
 	
-	@GetMapping("/newTracking")
-	public String newTracking(@ModelAttribute("tracking") Tracking tracking, Model model, HttpSession session) {
+	@GetMapping("/trackings/{dogId}/newTracking")
+	public String newTracking(@PathVariable("dogId") Long id, @ModelAttribute("tracking") Tracking tracking, Model model, HttpSession session) {
 		if(session.getAttribute("userId") == null) {
 			return "redirect:/";
 		}
 		User user = users.findById((Long) session.getAttribute("userId"));
 		model.addAttribute("user", user);
+		model.addAttribute("dog", dogs.findById(id));
 		return "createTracking.jsp";
 	}
 	
-	@PostMapping("/newTracking")
-	public String createTracking(@Valid @ModelAttribute("tracking") Tracking tracking, BindingResult result, Model model) {
+	@PostMapping("/trackings/{dogId}/newTracking")
+	public String createTracking(@PathVariable("dogId") Long id, @Valid @ModelAttribute("tracking") Tracking tracking, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return "createTracking.jsp";
-		}else {
-			trackings.createOrUpdate(tracking);
-			return "redirect:/dashboard";
 		}
+		
+		model.addAttribute("dog", dogs.findById((id)));
+		trackings.createOrUpdate(tracking);
+		return "redirect:/dashboard";
 		
 	}
     @PostMapping("/doggies")
-    public String createBook(@Valid @ModelAttribute("dog") Dog dog, BindingResult result) {
+    public String createADog(@Valid @ModelAttribute("dog") Dog dog, BindingResult result) {
 
     	if (result.hasErrors()) {
     		return "create.jsp";
@@ -120,7 +121,7 @@ public class PalController {
     	return "editDog.jsp";
     }
     
-    @PutMapping("/doggies/{id}/edit")
+    @PostMapping("/doggies/{id}/edit")
     public String updateDog(Model model, @Valid @ModelAttribute("dog") Dog dog, BindingResult result, HttpSession session) {
     	if(session.getAttribute("userId") == null) {
     		return "redirect:/";
@@ -135,14 +136,9 @@ public class PalController {
     	return "redirect:/dashboard";
     }
     
-    @GetMapping("/doggies/{id}/delete")
-    public String deleteDog (@PathVariable("id") Long id, HttpSession session) {
-    	if(session.getAttribute("userId") == null) {
-    		return "redirect:/";
-    	}
-    	Dog dog = dogs.findById(id);
-    	dogs.delete(dog);
-    	
+    @PostMapping("/doggies/{id}/delete")
+    public String deleteDog(@PathVariable("id") Long id) {
+    	dogs.delete(id);
     	return "redirect:/dashboard";
     }
 }
